@@ -1,7 +1,6 @@
 from django.views.generic import ListView
 
-from articles.models import Article, Topic, Scope
-from django.db.models.query import Prefetch
+from articles.models import Article, Scope
 
 
 class ArticleListView(ListView):
@@ -16,6 +15,9 @@ class ArticleListView(ListView):
             scopes = []
             for scope in Scope.objects.filter(article=element):
                 scopes.append(scope)
+
+            scopes.sort(key=lambda scope: str(scope.topic))
+            scopes.sort(key=lambda scope: not scope.is_main_topic)
 
             articles.append({
                 'title': element.title,
