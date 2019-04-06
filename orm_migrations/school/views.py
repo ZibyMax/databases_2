@@ -7,3 +7,4 @@ class StudentListView(ListView):
     model = Student
     ordering = 'group'
     queryset = Student.objects.all().prefetch_related('teachers')
+
